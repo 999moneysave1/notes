@@ -1,0 +1,1941 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>SAP SF EC - Master Hub (100% Responsive Mobile Engine)</title>
+
+  <!-- Bootstrap 5 CSS & Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+
+  <!-- Offline Safe Data Fallback -->
+  <script src="data.js"></script>
+
+  <style>
+    :root {
+      --bg-dark: #0f172a;
+      --card-bg: #1e293b;
+      --accent-neon: #38ef7d;
+      --accent-purple: #7000ff;
+      --gold: #ffc107;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg-dark);
+      background-image: radial-gradient(circle at 50% 0%, #1e1b4b, #0f172a 70%);
+      color: #ffffff !important;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      padding: 16px 12px;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    @media screen and (min-width: 992px) {
+      body { width: 85%; margin: auto; padding: 24px 20px; }
+    }
+
+    .header-box {
+      background: linear-gradient(135deg, #1e1b4b, #311042);
+      border: 2px solid #7000ff;
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .controls-panel {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin-bottom: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .search-group-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex: 1 1 100%;
+      min-width: 0;
+    }
+
+    @media screen and (min-width: 768px) {
+      .search-group-wrapper {
+        flex: 1 1 500px;
+        max-width: 650px;
+      }
+    }
+
+    .accordion-item {
+      background-color: #1e293b !important;
+      border: 1px solid #334155 !important;
+      border-radius: 10px !important;
+      margin-bottom: 12px;
+      overflow: hidden;
+    }
+
+    .accordion-header-wrapper {
+      display: flex;
+      align-items: center;
+      background-color: #1e293b;
+      border-radius: 10px;
+      position: relative;
+      width: 100%;
+      min-width: 0;
+    }
+
+    .accordion-button {
+      background-color: #1e293b !important;
+      color: #ffffff !important;
+      font-weight: 600;
+      box-shadow: none !important;
+      flex: 1 1 auto;
+      min-width: 0;
+      display: flex !important;
+      align-items: center !important;
+      padding: 12px 14px !important;
+      gap: 10px;
+    }
+
+    .accordion-button:not(.collapsed) {
+      background-color: #311042 !important;
+      color: #fbbf24 !important;
+    }
+
+    .step-badge {
+      background: #7000ff;
+      color: #fff;
+      font-size: 0.74rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 20px;
+      flex-shrink: 0 !important;
+      white-space: nowrap;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+    }
+
+    .match-count-badge {
+      background: #f59e0b;
+      color: #000;
+      font-size: 0.7rem;
+      font-weight: 800;
+      padding: 2px 7px;
+      border-radius: 10px;
+      margin-left: 6px;
+      white-space: nowrap;
+      display: inline-block;
+    }
+
+    /* 🟢 टेक्स्ट जस्टिफ़ाइड और क्लीन रैपिंग */
+    .accordion-title-text {
+      flex: 1 1 auto;
+      min-width: 0;
+      text-align: justify !important;
+      text-justify: inter-word !important;
+      line-height: 1.5 !important;
+      font-size: 0.95rem;
+      padding-right: 5px;
+      word-break: normal !important;
+      overflow-wrap: break-word !important;
+    }
+
+    .module-toolbar {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding-right: 10px;
+      flex-shrink: 0;
+    }
+
+    .accordion-body {
+      background: #111827;
+      color: #ffffff !important;
+      border-top: 1px solid #334155;
+      padding: 14px 12px;
+      line-height: 1.7;
+    }
+
+    .topic-card {
+      background: #0b0f19;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: 14px 12px;
+      margin-bottom: 16px;
+      position: relative;
+    }
+
+    .reading-active-highlight {
+      border: 2px solid var(--accent-neon) !important;
+      box-shadow: 0 0 12px rgba(56, 239, 125, 0.3) !important;
+    }
+
+    .reading-active-highlight::before {
+      content: "🔊 READING";
+      position: absolute;
+      top: -10px;
+      right: 12px;
+      background: var(--accent-neon);
+      color: #000;
+      font-size: 0.62rem;
+      font-weight: 900;
+      padding: 1px 6px;
+      border-radius: 6px;
+    }
+
+    .karaoke-word-active {
+      background-color: #f59e0b !important;
+      color: #000000 !important;
+      font-weight: 800 !important;
+      border-radius: 3px;
+      padding: 0 3px;
+      box-shadow: 0 0 8px rgba(245, 158, 11, 0.8);
+      display: inline-block;
+    }
+
+    .topic-header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 10px;
+      border-bottom: 1px solid #1e293b;
+      padding-bottom: 8px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .topic-header-bar h5 {
+      font-size: 1rem;
+      line-height: 1.4;
+      flex: 1 1 200px;
+      word-break: normal;
+      overflow-wrap: break-word;
+      text-align: justify !important;
+      text-justify: inter-word !important;
+    }
+
+    /* 🟢 अंदरूनी कंटेंट का 100% जस्टिफाई लेआउट */
+    .as-itis-display-card,
+    .as-itis-display-card p,
+    .as-itis-display-card div,
+    .as-itis-display-card li,
+    .as-itis-rich-box {
+      text-align: justify !important;
+      text-justify: inter-word !important;
+      word-break: normal !important;
+      overflow-wrap: break-word !important;
+      line-height: 1.75;
+    }
+
+    .as-itis-display-card {
+      background: #111827;
+      color: #ffffff;
+      border: 1px solid #1e293b;
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 14px;
+      font-size: 0.92rem;
+    }
+
+    .as-itis-display-card code,
+    .as-itis-rich-box code {
+      background: #1e293b;
+      color: #38ef7d;
+      padding: 2px 5px;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 0.88em;
+      border: 1px solid #334155;
+      word-break: break-all;
+    }
+
+    .as-itis-rich-box {
+      background: #0b0f19;
+      color: #ffffff;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: 12px;
+      min-height: 120px;
+      max-height: 300px;
+      overflow-y: auto;
+      outline: none;
+    }
+
+    .image-dropzone-box {
+      border: 2px dashed #38bdf8;
+      background: rgba(56, 189, 248, 0.05);
+      padding: 12px;
+      border-radius: 8px;
+      text-align: center;
+      cursor: pointer;
+      color: #94a3b8;
+      font-size: 0.85rem;
+    }
+
+    .media-center-wrapper {
+      text-align: center;
+      margin: 12px 0;
+      width: 100%;
+    }
+
+    .media-styled-frame {
+      display: inline-block;
+      background: #1e293b;
+      border: 2px solid #475569;
+      border-radius: 8px;
+      padding: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+      max-width: 100%;
+    }
+
+    .media-styled-frame img,
+    .media-styled-frame video,
+    .media-styled-frame iframe {
+      display: block;
+      margin: 0 auto;
+      border-radius: 6px;
+      height: auto;
+      max-width: 100%;
+    }
+
+    #annotationCanvas {
+      cursor: crosshair;
+      border: 2px solid #475569;
+      border-radius: 6px;
+      display: block;
+      margin: 0 auto;
+      background: #000;
+      max-width: 100%;
+    }
+
+    .tool-btn.active {
+      background-color: var(--accent-neon) !important;
+      color: #000 !important;
+      font-weight: bold;
+    }
+
+    .mode-indicator-badge {
+      font-size: 0.72rem;
+      padding: 3px 8px;
+      border-radius: 10px;
+      font-weight: bold;
+    }
+
+    /* 🟢 टेक्स्ट शॉर्टनर डिफ़ॉल्ट (डेस्कटॉप) */
+    .lang-short { display: none; }
+    .btn-short-text { display: none; }
+    .lang-full { display: inline; }
+    .btn-full-text { display: inline; }
+
+    /* ========================================================
+       🟢 768px के नीचे स्पेशल रिस्पॉन्सिव नियम
+       ======================================================== */
+    @media screen and (max-width: 768px) {
+      body { padding: 8px 6px; }
+
+      /* 1. हेडर और एडिट मोड बिल्कुल सेंटर में */
+      .header-box {
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        text-align: center !important;
+        padding: 12px 10px !important;
+        gap: 10px !important;
+      }
+      .header-brand-block {
+        width: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+      }
+      .title-badge-row {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 8px !important;
+        width: 100% !important;
+      }
+
+      /* 2. सबटाइटल को हटाना */
+      #systemModeDesc {
+        display: none !important;
+      }
+
+      .header-actions-row {
+        width: 100% !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        flex-wrap: wrap !important;
+        gap: 8px !important;
+      }
+
+      /* 3. भाषा में केवल IN / EN और बटन्स में केवल + C / + E */
+      .lang-full { display: none !important; }
+      .lang-short { display: inline !important; }
+      .btn-full-text { display: none !important; }
+      .btn-short-text { display: inline !important; }
+
+      /* 4. कैरोज़ोल हेडर: 1st रो में टाइटल (100% Viewport), 2nd रो में टूलबार */
+      .accordion-header-wrapper {
+        flex-direction: column !important;
+        align-items: stretch !important;
+      }
+      .accordion-button {
+        width: 100% !important;
+        padding: 10px 12px !important;
+      }
+      .accordion-title-text {
+        font-size: 0.90rem !important;
+      }
+      .module-toolbar {
+        width: 100% !important;
+        display: flex !important;
+        justify-content: flex-end !important;
+        padding: 6px 12px 8px 12px !important;
+        border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+        background: #182234 !important;
+        gap: 6px !important;
+      }
+      .module-toolbar:empty {
+        display: none !important;
+      }
+
+      /* कंट्रोल्स और ऑडियो बटन्स */
+      .controls-panel { padding: 10px; }
+      .audio-btn-group { width: 100%; display: flex; justify-content: space-between; }
+      .audio-btn-group .btn { flex: 1; padding: 4px 6px; font-size: 0.72rem; }
+    }
+
+    .goog-te-banner-frame.skiptranslate { display: none !important; }
+    body { top: 0px !important; }
+    #google_translate_element { display: none; }
+  </style>
+
+  <div id="google_translate_element"></div>
+  <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+        pageLanguage: 'hi',
+        includedLanguages: 'hi,en',
+        autoDisplay: false
+      }, 'google_translate_element');
+    }
+  </script>
+  <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</head>
+<body>
+
+  <!-- Top Header -->
+  <div class="header-box">
+    <div class="header-brand-block">
+      <div class="title-badge-row mb-1">
+        <h3 class="text-warning mb-0"><i class="bi bi-cpu-fill"></i> SAP SF EC Master Hub</h3>
+        <span id="systemModeBadge" class="mode-indicator-badge bg-secondary">Detecting...</span>
+      </div>
+      <p class="text-light small mb-0" id="systemModeDesc">Connected to Server - Changes save permanently to disk</p>
+    </div>
+
+    <div class="header-actions-row">
+      <!-- 🟢 भाषा टॉगल: मोबाइल पर 🇮🇳 IN / 🇬🇧 EN -->
+      <div class="btn-group btn-group-sm" role="group">
+        <button type="button" class="btn btn-outline-warning fw-bold active" id="btnLangHi" onclick="switchLanguage('hi')">
+          🇮🇳 <span class="lang-full">Hindi</span><span class="lang-short">IN</span>
+        </button>
+        <button type="button" class="btn btn-outline-warning fw-bold" id="btnLangEn" onclick="switchLanguage('en')">
+          🇬🇧 <span class="lang-full">English</span><span class="lang-short">EN</span>
+        </button>
+      </div>
+
+      <!-- 🟢 एडमिन बटन्स: मोबाइल पर + C / + E -->
+      <div class="d-flex gap-2" id="topAdminControls" style="display: none !important;">
+        <button class="btn btn-outline-info fw-bold btn-sm py-1 px-2" onclick="openAddModuleModal()">
+          <i class="bi bi-folder-plus"></i> <span class="btn-full-text">+ Add Carousel</span><span class="btn-short-text">+ C</span>
+        </button>
+        <button class="btn btn-success fw-bold btn-sm py-1 px-2" onclick="openAddModal()">
+          <i class="bi bi-plus-circle-fill"></i> <span class="btn-full-text">+ Add As-Is Entry</span><span class="btn-short-text">+ E</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Search & Audio Reader Panel -->
+  <div class="controls-panel">
+    <div class="search-group-wrapper">
+      <select id="searchFilterMode" class="form-select form-select-sm bg-dark text-white border-secondary" style="max-width: 130px; font-size: 0.78rem;" onchange="applySearchFilter()">
+        <option value="both" selected>Both (Q & A)</option>
+        <option value="question">Question</option>
+        <option value="answer">Answer</option>
+      </select>
+      <div class="input-group input-group-sm flex-fill">
+        <input type="text" id="searchInput" class="form-control bg-dark text-white border-secondary" placeholder="Search topics..." oninput="applySearchFilter()">
+        <button class="btn btn-outline-secondary" type="button" onclick="clearSearchInput()" title="Clear">
+          <i class="bi bi-x-lg"></i>
+        </button>
+        <button class="btn btn-outline-info fw-bold" type="button" id="voiceSearchBtn" onclick="toggleVoiceSearch()" title="बोलकर सर्च करें">
+          <i class="bi bi-mic-fill"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Master Audio Hub Controls -->
+    <div class="d-flex align-items-center gap-1 flex-wrap w-100 justify-content-between mt-2">
+      <span id="speechStatusIndicator" class="small text-muted fst-italic" style="font-size: 0.75rem;">Audio: Ready</span>
+      <div class="d-flex gap-1 audio-btn-group">
+        <button class="btn btn-sm btn-outline-success fw-bold py-1 px-2" onclick="readAllHubContent()" title="पूरा हब सुनें">
+          <i class="bi bi-play-fill"></i> Read All
+        </button>
+        <button class="btn btn-sm btn-outline-warning fw-bold py-1 px-2" onclick="pauseSpeech()" title="रोकें">
+          <i class="bi bi-pause-fill"></i>
+        </button>
+        <button class="btn btn-sm btn-outline-info fw-bold py-1 px-2" onclick="resumeSpeech()" title="चालू करें">
+          <i class="bi bi-play-circle-fill"></i>
+        </button>
+        <button class="btn btn-sm btn-outline-danger fw-bold py-1 px-2" onclick="stopSpeech()" title="बंद करें">
+          <i class="bi bi-stop-circle-fill"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Accordion Area -->
+  <div class="accordion" id="saasHubAccordion"></div>
+
+  <!-- 1. ADD / EDIT ENTRY MODAL -->
+  <div class="modal fade" id="entryModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content bg-dark text-white border-secondary">
+        <div class="modal-header border-secondary py-2">
+          <h6 class="modal-title text-warning" id="modalHeadingTitle"><i class="bi bi-file-richtext"></i> Add Entry</h6>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body p-3">
+          <input type="hidden" id="editItemId">
+          <input type="hidden" id="editItemModId">
+          <input type="hidden" id="editExistingImg">
+          <input type="hidden" id="rawOriginalImgStore">
+          <input type="hidden" id="editExistingVideo">
+
+          <div class="mb-2" id="moduleSelectDiv">
+            <label class="form-label small text-info mb-1">Target Carousel:</label>
+            <select id="modSelect" class="form-select form-select-sm bg-secondary text-white border-0"></select>
+          </div>
+          <div class="mb-2">
+            <label class="form-label small text-info mb-1">Heading / Question:</label>
+            <input type="text" id="entryTitle" class="form-control form-control-sm bg-secondary text-white border-0" placeholder="Question or Topic title...">
+          </div>
+          <div class="mb-2">
+            <label class="form-label small text-info mb-1">As-It-Is Content:</label>
+            <div contenteditable="true" id="entryContentBox" class="as-itis-rich-box" placeholder="Paste notes here..."></div>
+          </div>
+
+          <!-- Screenshot / Image Section -->
+          <div class="mb-2 p-2 border border-secondary rounded bg-dark">
+            <div class="d-flex justify-content-between align-items-center mb-1">
+              <label class="form-label small text-info mb-0"><i class="bi bi-image"></i> Screenshot (Ctrl + V):</label>
+              <select id="imageWidthSelect" class="form-select form-select-sm bg-dark text-white border-secondary py-0" style="width: 85px; font-size: 0.72rem;">
+                <option value="50%">50%</option>
+                <option value="75%" selected>75%</option>
+                <option value="100%">100%</option>
+              </select>
+            </div>
+
+            <div class="image-dropzone-box" id="pasteZone" tabindex="0">
+              <i class="bi bi-clipboard-check fs-5"></i><br>
+              यहाँ क्लिक करके सीधे स्क्रीनशॉट <b>Ctrl + V</b> से पेस्ट करें
+            </div>
+
+            <div class="text-center mt-2" id="previewArea" style="display: none;">
+              <img id="thumb" style="max-height: 120px; margin: 0 auto; border-radius: 6px; border: 1px solid #475569;" />
+              <div class="mt-2 d-flex justify-content-center gap-2">
+                <button type="button" class="btn btn-warning btn-sm fw-bold px-2 py-1" onclick="launchAnnotator()">
+                  <i class="bi bi-pencil-fill"></i> Annotate 🎨
+                </button>
+                <button type="button" class="btn btn-outline-danger btn-sm fw-bold px-2 py-1" onclick="clearCurrentScreenshot()">
+                  <i class="bi bi-x-circle-fill"></i> Remove
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Video Section -->
+          <div class="mb-2 p-2 border border-secondary rounded bg-dark">
+            <label class="form-label small text-warning mb-1"><i class="bi bi-camera-video-fill"></i> Video Attachment:</label>
+            <div class="mb-1">
+              <input type="text" id="localVideoPathInput" class="form-control form-control-sm bg-secondary text-white border-0" placeholder="Local path: videos/example.mp4">
+            </div>
+            <div class="row g-1 align-items-center">
+              <div class="col-6">
+                <input type="file" id="videoFileInput" class="form-control form-control-sm bg-secondary text-white border-0" accept="video/mp4,video/webm">
+              </div>
+              <div class="col-6">
+                <input type="text" id="videoUrlInput" class="form-control form-control-sm bg-secondary text-white border-0" placeholder="YouTube URL">
+              </div>
+            </div>
+            <div id="videoFeedbackArea" class="mt-1 small" style="display: none;"></div>
+          </div>
+        </div>
+        <div class="modal-footer border-secondary py-1">
+          <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-success btn-sm fw-bold px-3" onclick="saveEntryHandler()">Save Entry ✅</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. EDIT MODULE HEADER MODAL -->
+  <div class="modal fade" id="moduleHeaderModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content bg-dark text-white border-secondary">
+        <div class="modal-header border-secondary py-2">
+          <h6 class="modal-title text-warning"><i class="bi bi-pencil-square"></i> Edit Carousel Header</h6>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body p-3">
+          <input type="hidden" id="editModuleIndex">
+          <div class="mb-2">
+            <label class="form-label small text-info mb-1">Badge:</label>
+            <input type="text" id="moduleBadgeInput" class="form-control form-control-sm bg-secondary text-white border-0">
+          </div>
+          <div class="mb-2">
+            <label class="form-label small text-info mb-1">Carousel Title:</label>
+            <textarea id="moduleTitleInput" class="form-control form-control-sm bg-secondary text-white border-0" rows="3"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer border-secondary py-1">
+          <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-success btn-sm fw-bold px-3" onclick="saveModuleHeader()">Save ✅</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. ADD NEW MODULE MODAL -->
+  <div class="modal fade" id="addModuleModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content bg-dark text-white border-secondary">
+        <div class="modal-header border-secondary py-2">
+          <h6 class="modal-title text-info"><i class="bi bi-folder-plus"></i> Add Carousel</h6>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body p-3">
+          <div class="mb-2">
+            <label class="form-label small text-info mb-1">Badge (Auto):</label>
+            <input type="text" id="newModuleBadgeInput" class="form-control form-control-sm bg-secondary text-white border-0" readonly>
+          </div>
+          <div class="mb-2">
+            <label class="form-label small text-info mb-1">Module Title:</label>
+            <textarea id="newModuleTitleInput" class="form-control form-control-sm bg-secondary text-white border-0" rows="2" placeholder="e.g. EC Time Off & Leave Management"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer border-secondary py-1">
+          <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-info btn-sm fw-bold px-3" onclick="saveNewModule()">Create 🚀</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. ANNOTATION CANVAS MODAL -->
+  <div class="modal fade" id="annotateModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+      <div class="modal-content bg-dark text-white border-secondary">
+        <div class="modal-header border-secondary py-1">
+          <h6 class="modal-title text-warning small"><i class="bi bi-brush-fill"></i> Screenshot Annotator</h6>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body p-1 text-center" style="max-height: 75vh; overflow: auto;">
+          <div class="d-flex flex-wrap justify-content-center align-items-center gap-1 mb-1 p-1 bg-secondary rounded">
+            <button class="btn btn-xs btn-dark tool-btn active py-1 px-2" id="toolArrow" onclick="setAnnotateTool('arrow')"><i class="bi bi-arrow-up-right"></i> Arrow</button>
+            <button class="btn btn-xs btn-dark tool-btn py-1 px-2" id="toolRect" onclick="setAnnotateTool('rect')"><i class="bi bi-square"></i> Box</button>
+            <button class="btn btn-xs btn-dark tool-btn py-1 px-2" id="toolPen" onclick="setAnnotateTool('pen')"><i class="bi bi-pencil"></i> Pen</button>
+            <button class="btn btn-xs btn-dark tool-btn py-1 px-2" id="toolText" onclick="setAnnotateTool('text')"><i class="bi bi-type"></i> Text</button>
+
+            <input type="color" id="annotateColor" value="#ff0000" class="form-control form-control-color bg-dark border-0 p-0" style="width: 28px; height: 26px;">
+
+            <button class="btn btn-xs btn-outline-light py-1 px-2" onclick="undoAnnotation()"><i class="bi bi-arrow-counterclockwise"></i></button>
+            <button class="btn btn-xs btn-outline-light py-1 px-2" onclick="redoAnnotation()"><i class="bi bi-arrow-clockwise"></i></button>
+            <button class="btn btn-xs btn-danger py-1 px-2" onclick="forceRestoreCleanOriginal()" title="Reset"><i class="bi bi-arrow-repeat"></i></button>
+          </div>
+          <div style="overflow: auto;">
+            <canvas id="annotationCanvas"></canvas>
+          </div>
+        </div>
+        <div class="modal-footer border-secondary justify-content-between py-1">
+          <span class="small text-muted" style="font-size:0.7rem;">Drag to draw highlights</span>
+          <div>
+            <button type="button" class="btn btn-secondary btn-sm py-1" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-success btn-sm fw-bold px-3 py-1" onclick="applyAnnotationToImage()">Done ✅</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // GitHub Pages व लोकल सर्वर मोड डिटेक्टर
+    const isServerMode = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+
+    const defaultModules = [
+      { id: "mod_0", badge: "Module 0", title: "SAP SF EC Core", items: [] }
+    ];
+
+    let db = (typeof masterDB !== 'undefined' && Array.isArray(masterDB)) ? masterDB : defaultModules;
+    let pastedImageBase64 = "";
+    let processedVideoBase64 = "";
+    let cleanOriginalImageBackup = "";
+
+    // शुरू में null रहेगा ताकि सब बंद रहे (All Collapsed by Default)
+    let activeModuleId = null;
+
+    function autoResequenceModuleBadges() {
+      db.forEach((mod, idx) => {
+        mod.badge = `Module ${idx}`;
+      });
+    }
+
+    function setupModeUI() {
+      const modeBadge = document.getElementById("systemModeBadge");
+      const modeDesc = document.getElementById("systemModeDesc");
+      const topAdmin = document.getElementById("topAdminControls");
+
+      if (isServerMode) {
+        modeBadge.className = "mode-indicator-badge bg-success text-white";
+        modeBadge.innerHTML = "<i class='bi bi-shield-lock-fill'></i> Edit Mode";
+        modeDesc.innerText = "Connected to Server - Changes save permanently";
+        topAdmin.style.setProperty('display', 'flex', 'important');
+      } else {
+        modeBadge.className = "mode-indicator-badge bg-primary text-white";
+        modeBadge.innerHTML = "<i class='bi bi-book-half'></i> Student Mode";
+        modeDesc.innerText = "All Collapsed by Default - Fast Mobile Search";
+        topAdmin.style.setProperty('display', 'none', 'important');
+      }
+    }
+
+    async function loadData() {
+      setupModeUI();
+
+      if (isServerMode) {
+        try {
+          const res = await fetch('/api/data');
+          if (res.ok) {
+            const remoteData = await res.json();
+            if (Array.isArray(remoteData) && remoteData.length > 0) {
+              db = remoteData;
+            }
+          }
+        } catch (e) {
+          console.warn("Server fetch error, fallback to data.js.");
+        }
+      }
+      autoResequenceModuleBadges();
+      populateModules();
+      activeModuleId = null; // शुरू में सब बंद रहेगा
+      render();
+    }
+
+    function populateModules() {
+      const select = document.getElementById('modSelect');
+      if (!select) return;
+      select.innerHTML = '';
+      db.forEach(m => {
+        const opt = document.createElement('option');
+        opt.value = m.id;
+        opt.innerText = `${m.badge}: ${m.title.substring(0, 50)}...`;
+        select.appendChild(opt);
+      });
+    }
+
+    function wrapTextForKaraoke(container) {
+      function processNode(node) {
+        if (node.nodeType === Node.TEXT_NODE) {
+          const text = node.nodeValue;
+          if (text.trim().length > 0) {
+            const words = text.split(/(\s+)/);
+            const fragment = document.createDocumentFragment();
+            words.forEach(token => {
+              if (token.trim().length > 0) {
+                const span = document.createElement('span');
+                span.className = 'karaoke-word';
+                span.textContent = token;
+                fragment.appendChild(span);
+              } else if (token.length > 0) {
+                fragment.appendChild(document.createTextNode(token));
+              }
+            });
+            node.parentNode.replaceChild(fragment, node);
+          }
+        } else if (node.nodeType === Node.ELEMENT_NODE && node.nodeName !== 'SCRIPT' && node.nodeName !== 'STYLE') {
+          Array.from(node.childNodes).forEach(processNode);
+        }
+      }
+      processNode(container);
+    }
+
+    // 🟢 RENDER ENGINE (100% RESPONSIVE + ALL COLLAPSED BY DEFAULT)
+    function render(filteredDb = null) {
+      const renderSource = filteredDb || db;
+      const container = document.getElementById("saasHubAccordion");
+      container.innerHTML = "";
+
+      let hasAnyContent = false;
+
+      renderSource.forEach((mod, modIdx) => {
+        hasAnyContent = true;
+
+        // नियम: शुरू में और सर्च करने पर सब बंद रहेगा
+        const isOpen = (activeModuleId && mod.id === activeModuleId);
+        let isShow = isOpen ? "show" : "";
+        let isCollapsed = isOpen ? "" : "collapsed";
+
+        let itemsHtml = "";
+        let globalImgCounter = 1;
+
+        if (mod.items && mod.items.length > 0) {
+          mod.items.forEach((item, itemIdx) => {
+            let imageMarkup = "";
+            if (item.img) {
+              let imgTitle = `Image ${globalImgCounter} for Better Understanding`;
+              globalImgCounter++;
+              let widthValue = item.imgWidth || "75%";
+
+              imageMarkup = `
+                <div class="media-center-wrapper">
+                  <div class="media-styled-frame" style="width: ${widthValue};">
+                    <div style="font-size:0.75rem; font-weight:bold; color:#38ef7d; margin-bottom:6px; text-align:left;">
+                      <i class="bi bi-image-fill"></i> ${imgTitle}
+                    </div>
+                    <img src="${item.img}" style="width: 100%;" alt="${imgTitle}" />
+                  </div>
+                </div>
+              `;
+            }
+
+            let videoMarkup = "";
+            if (item.video) {
+              let isYouTube = item.video.includes("youtube.com") || item.video.includes("youtu.be");
+              let embedUrl = item.video;
+              if (isYouTube) {
+                let vidId = "";
+                if (item.video.includes("v=")) {
+                  vidId = item.video.split("v=")[1].split("&")[0];
+                } else if (item.video.includes("youtu.be/")) {
+                  vidId = item.video.split("youtu.be/")[1];
+                }
+                embedUrl = `https://www.youtube.com/embed/${vidId}`;
+              }
+
+              videoMarkup = `
+                <div class="media-center-wrapper">
+                  <div class="media-styled-frame" style="width: 90%;">
+                    <div style="font-size:0.75rem; font-weight:bold; color:#38bdf8; margin-bottom:6px; text-align:left;">
+                      <i class="bi bi-camera-video-fill"></i> Video Guide
+                    </div>
+                    ${isYouTube ? `
+                      <div class="ratio ratio-16x9">
+                        <iframe src="${embedUrl}" allowfullscreen style="border-radius:6px; border:none;"></iframe>
+                      </div>
+                    ` : `
+                      <video controls preload="none" style="width: 100%; border-radius: 6px; background: #000;">
+                        <source src="${item.video}" type="video/mp4">
+                      </video>
+                    `}
+                  </div>
+                </div>
+              `;
+            }
+
+            const isFirstItem = itemIdx === 0;
+            const isLastItem = itemIdx === mod.items.length - 1;
+
+            let itemActionButtons = `
+              <button class="btn btn-xs btn-outline-success py-0 px-2" style="font-size:0.72rem;" onclick="speakSingleItem('${mod.id}', '${item.id}')" title="Read note">
+                <i class="bi bi-play-fill"></i> Read
+              </button>
+              <button class="btn btn-xs btn-outline-warning py-0 px-1" style="font-size:0.72rem;" onclick="pauseSpeech()" title="Pause">
+                <i class="bi bi-pause-fill"></i>
+              </button>
+              <button class="btn btn-xs btn-outline-info py-0 px-1" style="font-size:0.72rem;" onclick="resumeSpeech()" title="Resume">
+                <i class="bi bi-play-circle-fill"></i>
+              </button>
+              <button class="btn btn-xs btn-outline-danger py-0 px-1" style="font-size:0.72rem;" onclick="stopSpeech()" title="Stop">
+                <i class="bi bi-stop-circle-fill"></i>
+              </button>
+            `;
+
+            if (isServerMode) {
+              itemActionButtons += `
+                <button class="btn btn-xs btn-outline-secondary py-0 px-1" style="font-size:0.72rem;" onclick="moveItem('${mod.id}', ${itemIdx}, 'up')" ${isFirstItem ? 'disabled' : ''}>
+                  <i class="bi bi-arrow-up"></i>
+                </button>
+                <button class="btn btn-xs btn-outline-secondary py-0 px-1" style="font-size:0.72rem;" onclick="moveItem('${mod.id}', ${itemIdx}, 'down')" ${isLastItem ? 'disabled' : ''}>
+                  <i class="bi bi-arrow-down"></i>
+                </button>
+                <button class="btn btn-xs btn-outline-warning py-0 px-2" style="font-size:0.72rem;" onclick="duplicateItem('${mod.id}', '${item.id}')">
+                  <i class="bi bi-copy"></i>
+                </button>
+                <button class="btn btn-xs btn-outline-info py-0 px-2" style="font-size:0.72rem;" onclick="openEditModal('${mod.id}', '${item.id}')">
+                  <i class="bi bi-pencil-square"></i>
+                </button>
+                <button class="btn btn-xs btn-outline-danger py-0 px-2" style="font-size:0.72rem;" onclick="deleteEntry('${item.id}')">
+                  <i class="bi bi-trash"></i>
+                </button>
+              `;
+            }
+
+            itemsHtml += `
+              <div class="topic-card searchable-card" id="card-${item.id}">
+                <div class="topic-header-bar">
+                  <h5 class="text-warning fw-bold mb-0" id="title-${item.id}">${escapeHtml(item.title)}</h5>
+                  <div class="d-flex gap-1 align-items-center flex-wrap">
+                    ${itemActionButtons}
+                  </div>
+                </div>
+                <div class="as-itis-display-card" id="content-${item.id}">${item.content}</div>
+                ${imageMarkup}
+                ${videoMarkup}
+              </div>
+            `;
+          });
+        } else {
+          itemsHtml = `<p class="text-muted small my-2">इस कैरोसेल में अभी कोई नोट नहीं है।</p>`;
+        }
+
+        const isFirstModule = modIdx === 0;
+        const isLastModule = modIdx === renderSource.length - 1;
+
+        let headerModuleToolbar = "";
+        if (isServerMode) {
+          headerModuleToolbar = `
+            <div class="module-toolbar">
+              <button class="btn btn-xs btn-outline-light py-0 px-1" onclick="moveModule(${modIdx}, 'up')" ${isFirstModule ? 'disabled' : ''}>
+                <i class="bi bi-arrow-up-circle"></i>
+              </button>
+              <button class="btn btn-xs btn-outline-light py-0 px-1" onclick="moveModule(${modIdx}, 'down')" ${isLastModule ? 'disabled' : ''}>
+                <i class="bi bi-arrow-down-circle"></i>
+              </button>
+              <button class="btn btn-xs btn-outline-info py-0 px-1" onclick="cloneCarouselModule(${modIdx})" title="Clone">
+                <i class="bi bi-copy"></i>
+              </button>
+              <button class="btn btn-xs btn-outline-warning py-0 px-1" onclick="openModuleHeaderModal(${modIdx})" title="Edit">
+                <i class="bi bi-pencil"></i>
+              </button>
+              <button class="btn btn-xs btn-outline-danger py-0 px-1" onclick="deleteModule(${modIdx})" title="Delete">
+                <i class="bi bi-trash"></i>
+              </button>
+            </div>
+          `;
+        }
+
+        let matchBadgeHtml = "";
+        if (mod._matchCount) {
+          matchBadgeHtml = `<span class="match-count-badge"><i class="bi bi-search"></i> ${mod._matchCount} Match</span>`;
+        }
+
+        let cardHtml = `
+          <div class="accordion-item" id="accordion-${mod.id}">
+            <div class="accordion-header-wrapper" id="header-wrapper-${mod.id}">
+              <button class="accordion-button ${isCollapsed}" id="btn-${mod.id}" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-${mod.id}">
+                <span class="step-badge">${escapeHtml(mod.badge)}</span>
+                <span class="accordion-title-text">${escapeHtml(mod.title)} ${matchBadgeHtml}</span>
+              </button>
+              ${headerModuleToolbar}
+            </div>
+
+            <div id="collapse-${mod.id}" class="accordion-collapse collapse ${isShow}">
+              <div class="accordion-body">${itemsHtml}</div>
+            </div>
+          </div>
+        `;
+        container.innerHTML += cardHtml;
+      });
+
+      if (!hasAnyContent) {
+        container.innerHTML = `<div class="text-center text-muted py-5"><i class="bi bi-search fs-2"></i><p class="mt-2">कोई मैचिंग परिणाम नहीं मिला।</p></div>`;
+      } else {
+        document.querySelectorAll('.as-itis-display-card').forEach(wrapTextForKaraoke);
+        document.querySelectorAll('.topic-header-bar h5').forEach(wrapTextForKaraoke);
+      }
+
+      document.querySelectorAll('.accordion-collapse').forEach(col => {
+        col.addEventListener('shown.bs.collapse', function () {
+          activeModuleId = this.id.replace('collapse-', '');
+        });
+      });
+    }
+
+    // ========================================================
+    // 🔍 100% सटीक इंस्टेंट सर्च (MATCHES ON TOP & ALL CLOSED)
+    // ========================================================
+    function applySearchFilter() {
+      const mode = document.getElementById("searchFilterMode").value;
+      const query = document.getElementById("searchInput").value.trim().toLowerCase();
+
+      if (!query) {
+        activeModuleId = null;
+        render();
+        return;
+      }
+
+      activeModuleId = null; // सर्च पर सभी मॉड्यूल बंद रहेंगे
+      let matchedModules = [];
+
+      db.forEach(mod => {
+        let matchingItems = [];
+
+        if (mod.items && mod.items.length > 0) {
+          matchingItems = mod.items.filter(item => {
+            const titleText = (item.title || "").toLowerCase();
+            const cleanContent = (item.content || "").replace(/<[^>]*>?/gm, ' ').toLowerCase();
+
+            if (mode === 'question') {
+              return titleText.includes(query);
+            } else if (mode === 'answer') {
+              return cleanContent.includes(query);
+            } else {
+              return titleText.includes(query) || cleanContent.includes(query) || (mod.title || "").toLowerCase().includes(query);
+            }
+          });
+        }
+
+        if (matchingItems.length > 0) {
+          let modCopy = JSON.parse(JSON.stringify(mod));
+          modCopy.items = matchingItems;
+          modCopy._matchCount = matchingItems.length;
+          matchedModules.push(modCopy);
+        } else if (mode === 'both' && (mod.title || "").toLowerCase().includes(query)) {
+          let modCopy = JSON.parse(JSON.stringify(mod));
+          modCopy._matchCount = mod.items ? mod.items.length : 0;
+          matchedModules.push(modCopy);
+        }
+      });
+
+      // मैचिंग वाले मॉड्यूल्स को तुरंत सबसे टॉप पर लाना
+      matchedModules.sort((a, b) => (b._matchCount || 0) - (a._matchCount || 0));
+
+      render(matchedModules);
+    }
+
+    function clearSearchInput() {
+      document.getElementById("searchInput").value = "";
+      applySearchFilter();
+    }
+
+    // ========================================================
+    // 🎙️ वॉइस सर्च (स्मार्ट स्पीच टाइपिंग और ऑटो-सर्च)
+    // ========================================================
+    let isVoiceSearching = false;
+    let voiceRecognizer = null;
+
+    function toggleVoiceSearch() {
+      const voiceBtn = document.getElementById("voiceSearchBtn");
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+      if (!SpeechRecognition) {
+        alert("आपका ब्राउज़र वॉइस सर्च सपोर्ट नहीं करता। Chrome इस्तेमाल करें।");
+        return;
+      }
+
+      if (isVoiceSearching && voiceRecognizer) {
+        voiceRecognizer.stop();
+        isVoiceSearching = false;
+        voiceBtn.className = "btn btn-outline-info fw-bold";
+        voiceBtn.innerHTML = `<i class="bi bi-mic-fill"></i>`;
+        return;
+      }
+
+      voiceRecognizer = new SpeechRecognition();
+      voiceRecognizer.lang = 'hi-IN';
+      voiceRecognizer.continuous = false;
+      voiceRecognizer.interimResults = false;
+
+      voiceRecognizer.onstart = function() {
+        isVoiceSearching = true;
+        voiceBtn.className = "btn btn-danger fw-bold";
+        voiceBtn.innerHTML = `<i class="bi bi-record-circle-fill"></i>`;
+      };
+
+      voiceRecognizer.onresult = function(event) {
+        const spokenText = event.results[0][0].transcript;
+        const searchBox = document.getElementById("searchInput");
+        searchBox.value = spokenText;
+        applySearchFilter(); // बोलते ही तुरंत सर्च होगा और मैच टॉप पर आ जाएगा!
+      };
+
+      voiceRecognizer.onerror = function(err) {
+        isVoiceSearching = false;
+        voiceBtn.className = "btn btn-outline-info fw-bold";
+        voiceBtn.innerHTML = `<i class="bi bi-mic-fill"></i>`;
+      };
+
+      voiceRecognizer.onend = function() {
+        isVoiceSearching = false;
+        voiceBtn.className = "btn btn-outline-info fw-bold";
+        voiceBtn.innerHTML = `<i class="bi bi-mic-fill"></i>`;
+      };
+
+      voiceRecognizer.start();
+    }
+
+    async function syncAllDatabaseToDisk() {
+      if (!isServerMode) return;
+      try {
+        const res = await fetch('/api/save-all', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ database: db })
+        });
+        const result = await res.json();
+        if (!result.success) console.error("Save-all error:", result.error);
+      } catch (e) {
+        console.warn("Server offline. Cannot write directly to disk.");
+      }
+    }
+
+    async function cloneCarouselModule(modIdx) {
+      if (!isServerMode) return;
+      const original = db[modIdx];
+      const cloned = JSON.parse(JSON.stringify(original));
+      cloned.id = "mod_" + Date.now() + "_" + Math.floor(Math.random() * 1000);
+      cloned.title = original.title + " (Copy)";
+
+      if (cloned.items && cloned.items.length > 0) {
+        cloned.items.forEach(it => {
+          it.id = "item_" + Date.now() + "_" + Math.floor(Math.random() * 1000);
+        });
+      }
+
+      db.splice(modIdx + 1, 0, cloned);
+      activeModuleId = cloned.id;
+      autoResequenceModuleBadges();
+      await syncAllDatabaseToDisk();
+      render();
+      populateModules();
+      ensureElementVisible(document.getElementById(`accordion-${cloned.id}`));
+    }
+
+    function openModuleHeaderModal(modIndex) {
+      if (!isServerMode) return;
+      let mod = db[modIndex];
+      if (!mod) return;
+      document.getElementById('editModuleIndex').value = modIndex;
+      document.getElementById('moduleBadgeInput').value = mod.badge || "";
+      document.getElementById('moduleTitleInput').value = mod.title || "";
+
+      let modal = new bootstrap.Modal(document.getElementById('moduleHeaderModal'));
+      modal.show();
+    }
+
+    async function saveModuleHeader() {
+      let modIndex = parseInt(document.getElementById('editModuleIndex').value, 10);
+      let newBadge = document.getElementById('moduleBadgeInput').value.trim();
+      let newTitle = document.getElementById('moduleTitleInput').value.trim();
+
+      if (!newTitle) {
+        alert("Carousel Title cannot be empty.");
+        return;
+      }
+
+      if (db[modIndex]) {
+        db[modIndex].badge = newBadge || db[modIndex].badge;
+        db[modIndex].title = newTitle;
+        activeModuleId = db[modIndex].id;
+
+        await syncAllDatabaseToDisk();
+
+        let modalEl = document.getElementById('moduleHeaderModal');
+        let modal = bootstrap.Modal.getInstance(modalEl);
+        if (modal) modal.hide();
+
+        render();
+        populateModules();
+      }
+    }
+
+    async function deleteEntry(itemId) {
+      if (!confirm("क्या आप वाकई इस एंट्री को डिलीट करना चाहते हैं?")) return;
+
+      let parentMod = db.find(m => m.items && m.items.some(it => it.id === itemId));
+      if (parentMod) {
+        activeModuleId = parentMod.id;
+      }
+
+      db.forEach(mod => {
+        if (mod.items) {
+          mod.items = mod.items.filter(it => it.id !== itemId);
+        }
+      });
+
+      await syncAllDatabaseToDisk();
+      render();
+
+      if (activeModuleId) {
+        setTimeout(() => {
+          ensureElementVisible(document.getElementById(`accordion-${activeModuleId}`));
+        }, 100);
+      }
+    }
+
+    async function deleteModule(modIndex) {
+      if (!isServerMode) return;
+      let mod = db[modIndex];
+      if (!confirm(`Are you sure you want to delete: "${mod.badge}: ${mod.title}"?`)) return;
+
+      db.splice(modIndex, 1);
+      activeModuleId = db[Math.max(0, modIndex - 1)] ? db[Math.max(0, modIndex - 1)].id : null;
+
+      autoResequenceModuleBadges();
+      await syncAllDatabaseToDisk();
+      render();
+      populateModules();
+    }
+
+    async function moveModule(index, direction) {
+      if (!isServerMode) return;
+      if (direction === 'up' && index > 0) {
+        let temp = db[index];
+        db[index] = db[index - 1];
+        db[index - 1] = temp;
+        activeModuleId = temp.id;
+      } else if (direction === 'down' && index < db.length - 1) {
+        let temp = db[index];
+        db[index] = db[index + 1];
+        db[index + 1] = temp;
+        activeModuleId = temp.id;
+      }
+      autoResequenceModuleBadges();
+      await syncAllDatabaseToDisk();
+      render();
+      populateModules();
+    }
+
+    async function moveItem(moduleId, itemIndex, direction) {
+      if (!isServerMode) return;
+      let mod = db.find(m => m.id === moduleId);
+      if (!mod || !mod.items) return;
+
+      activeModuleId = moduleId;
+
+      if (direction === 'up' && itemIndex > 0) {
+        let temp = mod.items[itemIndex];
+        mod.items[itemIndex] = mod.items[itemIndex - 1];
+        mod.items[itemIndex - 1] = temp;
+      } else if (direction === 'down' && itemIndex < mod.items.length - 1) {
+        let temp = mod.items[itemIndex];
+        mod.items[itemIndex] = mod.items[itemIndex + 1];
+        mod.items[itemIndex + 1] = temp;
+      }
+      await syncAllDatabaseToDisk();
+      render();
+    }
+
+    async function duplicateItem(moduleId, itemId) {
+      if (!isServerMode) return;
+      let mod = db.find(m => m.id === moduleId);
+      if (!mod || !mod.items) return;
+
+      activeModuleId = moduleId;
+
+      let itemIndex = mod.items.findIndex(it => it.id === itemId);
+      if (itemIndex === -1) return;
+
+      let original = mod.items[itemIndex];
+      let clonedItem = JSON.parse(JSON.stringify(original));
+      clonedItem.id = "item_" + Date.now() + "_" + Math.floor(Math.random() * 1000);
+      clonedItem.title = original.title + " (Copy)";
+
+      mod.items.splice(itemIndex + 1, 0, clonedItem);
+      await syncAllDatabaseToDisk();
+      render();
+      setTimeout(() => {
+        ensureElementVisible(document.getElementById(`card-${clonedItem.id}`));
+      }, 100);
+    }
+
+    function openAddModuleModal() {
+      if (!isServerMode) return;
+      document.getElementById('newModuleBadgeInput').value = `Module ${db.length}`;
+      document.getElementById('newModuleTitleInput').value = "";
+      let modal = new bootstrap.Modal(document.getElementById('addModuleModal'));
+      modal.show();
+    }
+
+    async function saveNewModule() {
+      let title = document.getElementById('newModuleTitleInput').value.trim();
+      if (!title) {
+        alert("Please enter a module title.");
+        return;
+      }
+
+      let newModule = {
+        id: "mod_" + Date.now() + "_" + Math.floor(Math.random() * 1000),
+        badge: `Module ${db.length}`,
+        title: title,
+        items: []
+      };
+
+      db.push(newModule);
+      activeModuleId = newModule.id;
+      autoResequenceModuleBadges();
+      await syncAllDatabaseToDisk();
+
+      let modalEl = document.getElementById('addModuleModal');
+      let modal = bootstrap.Modal.getInstance(modalEl);
+      if (modal) modal.hide();
+
+      render();
+      populateModules();
+      setTimeout(() => {
+        ensureElementVisible(document.getElementById(`accordion-${newModule.id}`));
+      }, 100);
+    }
+
+    function switchLanguage(langCode) {
+      document.getElementById('btnLangHi').classList.toggle('active', langCode === 'hi');
+      document.getElementById('btnLangEn').classList.toggle('active', langCode === 'en');
+
+      const select = document.querySelector('.goog-te-combo');
+      if (select) {
+        select.value = langCode;
+        select.dispatchEvent(new Event('change'));
+      } else {
+        document.cookie = `googtrans=/hi/${langCode}; path=/;`;
+        location.reload();
+      }
+    }
+
+    // ========================================================
+    // 🎧 SHAKE-FREE KARAOKE ENGINE
+    // ========================================================
+    let readingQueue = [];
+    let readingIndex = 0;
+    let isReadingActive = false;
+    let currentSpeechUtterance = null;
+
+    function clearAllReadingHighlights() {
+      document.querySelectorAll('.reading-active-highlight').forEach(el => el.classList.remove('reading-active-highlight'));
+      document.querySelectorAll('.karaoke-word-active').forEach(el => el.classList.remove('karaoke-word-active'));
+    }
+
+    function ensureElementVisible(targetEl) {
+      if (!targetEl) return;
+      const rect = targetEl.getBoundingClientRect();
+      const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+      if (rect.top >= 60 && rect.bottom <= windowHeight - 60) return;
+      targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    function highlightAndScrollElement(elementId, moduleId = null) {
+      document.querySelectorAll('.reading-active-highlight').forEach(el => el.classList.remove('reading-active-highlight'));
+
+      if (moduleId) {
+        const collapseEl = document.getElementById(`collapse-${moduleId}`);
+        if (collapseEl && !collapseEl.classList.contains('show')) {
+          const bsCollapse = bootstrap.Collapse.getOrCreateInstance(collapseEl);
+          bsCollapse.show();
+        }
+      }
+
+      const targetEl = document.getElementById(elementId);
+      if (targetEl) {
+        targetEl.classList.add('reading-active-highlight');
+        ensureElementVisible(targetEl);
+      }
+    }
+
+    function pauseSpeech() {
+      if ('speechSynthesis' in window && window.speechSynthesis.speaking) {
+        window.speechSynthesis.pause();
+        document.getElementById("speechStatusIndicator").innerText = "Audio: Paused ⏸️";
+      }
+    }
+
+    function resumeSpeech() {
+      if ('speechSynthesis' in window && window.speechSynthesis.paused) {
+        window.speechSynthesis.resume();
+        document.getElementById("speechStatusIndicator").innerText = "Audio: Resumed ▶️";
+      }
+    }
+
+    function stopSpeech() {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+      }
+      readingQueue = [];
+      readingIndex = 0;
+      isReadingActive = false;
+      currentSpeechUtterance = null;
+      clearAllReadingHighlights();
+      document.getElementById("speechStatusIndicator").innerText = "Audio: Stopped ⏹️";
+    }
+
+    function createKaraokeUtterance(containerElement, customLang = 'hi-IN') {
+      const wordSpans = Array.from(containerElement.querySelectorAll('.karaoke-word'));
+      let fullSpokenText = "";
+      const spanOffsets = [];
+
+      wordSpans.forEach(span => {
+        const text = span.textContent.trim();
+        if (text) {
+          const start = fullSpokenText.length;
+          fullSpokenText += text + " ";
+          const end = fullSpokenText.length;
+          spanOffsets.push({ span, start, end });
+        }
+      });
+
+      if (!fullSpokenText.trim()) return null;
+
+      const utterance = new SpeechSynthesisUtterance(fullSpokenText.trim());
+      utterance.lang = customLang;
+      utterance.rate = 0.95;
+
+      utterance.onboundary = function (event) {
+        if (event.name === 'word' || typeof event.charIndex === 'number') {
+          const charIdx = event.charIndex;
+          let matchedSpan = null;
+
+          for (let i = 0; i < spanOffsets.length; i++) {
+            if (charIdx >= spanOffsets[i].start && (i === spanOffsets.length - 1 || charIdx < spanOffsets[i + 1].start)) {
+              matchedSpan = spanOffsets[i].span;
+              break;
+            }
+          }
+
+          if (matchedSpan) {
+            document.querySelectorAll('.karaoke-word-active').forEach(el => el.classList.remove('karaoke-word-active'));
+            matchedSpan.classList.add('karaoke-word-active');
+
+            const r = matchedSpan.getBoundingClientRect();
+            if (r.bottom > window.innerHeight - 60 || r.top < 60) {
+              matchedSpan.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+          }
+        }
+      };
+
+      return utterance;
+    }
+
+    function speakSingleItem(modId, itemId) {
+      stopSpeech();
+      highlightAndScrollElement(`card-${itemId}`, modId);
+
+      const card = document.getElementById(`card-${itemId}`);
+      if (!card) return;
+
+      const utterance = createKaraokeUtterance(card);
+      if (!utterance) return;
+
+      utterance.onstart = () => {
+        document.getElementById("speechStatusIndicator").innerText = "Reading... 🔊";
+      };
+      utterance.onend = () => {
+        document.getElementById("speechStatusIndicator").innerText = "Audio: Ready";
+        clearAllReadingHighlights();
+      };
+      utterance.onerror = () => {
+        clearAllReadingHighlights();
+      };
+
+      currentSpeechUtterance = utterance;
+      window.speechSynthesis.speak(utterance);
+    }
+
+    function readAllHubContent() {
+      stopSpeech();
+      readingQueue = [];
+      readingIndex = 0;
+
+      db.forEach(mod => {
+        if (!mod.items || mod.items.length === 0) return;
+
+        mod.items.forEach(item => {
+          readingQueue.push({
+            modId: mod.id,
+            itemId: item.id
+          });
+        });
+      });
+
+      if (readingQueue.length === 0) {
+        alert("पढ़ने के लिए कोई कंटेंट नहीं मिला!");
+        return;
+      }
+
+      isReadingActive = true;
+      playNextQueueAudio();
+    }
+
+    function playNextQueueAudio() {
+      if (!isReadingActive || readingIndex >= readingQueue.length) {
+        document.getElementById("speechStatusIndicator").innerText = "Audio: Finished 🏁";
+        isReadingActive = false;
+        clearAllReadingHighlights();
+        return;
+      }
+
+      const itemInfo = readingQueue[readingIndex];
+      document.getElementById("speechStatusIndicator").innerText = `Reading (${readingIndex + 1}/${readingQueue.length}) 🔊`;
+
+      highlightAndScrollElement(`card-${itemInfo.itemId}`, itemInfo.modId);
+
+      const card = document.getElementById(`card-${itemInfo.itemId}`);
+      if (!card) {
+        readingIndex++;
+        playNextQueueAudio();
+        return;
+      }
+
+      const utterance = createKaraokeUtterance(card);
+      if (!utterance) {
+        readingIndex++;
+        playNextQueueAudio();
+        return;
+      }
+
+      utterance.onend = function() {
+        if (isReadingActive) {
+          readingIndex++;
+          playNextQueueAudio();
+        }
+      };
+
+      utterance.onerror = function() {
+        if (isReadingActive) {
+          readingIndex++;
+          playNextQueueAudio();
+        }
+      };
+
+      currentSpeechUtterance = utterance;
+      window.speechSynthesis.speak(utterance);
+    }
+
+    const videoFileInput = document.getElementById('videoFileInput');
+    const videoUrlInput = document.getElementById('videoUrlInput');
+    const videoFeedbackArea = document.getElementById('videoFeedbackArea');
+
+    videoFileInput.addEventListener('change', function () {
+      const file = this.files[0];
+      if (!file) return;
+
+      const sizeInMB = file.size / (1024 * 1024);
+      videoFeedbackArea.style.display = 'block';
+
+      if (sizeInMB > 30) {
+        this.value = '';
+        processedVideoBase64 = '';
+        videoFeedbackArea.className = "mt-2 p-2 rounded bg-danger text-white";
+        videoFeedbackArea.innerHTML = `
+          <i class="bi bi-exclamation-triangle-fill"></i> <strong>File Size: ${sizeInMB.toFixed(1)} MB</strong><br>
+          फ़ाइल 30 MB से बड़ी है! कृपया इसे सीधे <code>videos/</code> फ़ोल्डर में रखें।
+        `;
+        videoUrlInput.focus();
+      } else {
+        videoFeedbackArea.className = "mt-2 p-2 rounded bg-success text-white";
+        videoFeedbackArea.innerHTML = `<i class="bi bi-check-circle-fill"></i> <strong>Size: ${sizeInMB.toFixed(1)} MB</strong> (स्वीकृत!)`;
+
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          processedVideoBase64 = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    let canvas = document.getElementById('annotationCanvas');
+    let ctx = canvas.getContext('2d');
+    let baseImg = new Image();
+    let currentTool = 'arrow';
+    let isDrawing = false;
+    let startX, startY;
+    let canvasUndoStack = [];
+    let canvasRedoStack = [];
+
+    function setAnnotateTool(tool) {
+      currentTool = tool;
+      document.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
+      if (tool === 'arrow') document.getElementById('toolArrow').classList.add('active');
+      if (tool === 'rect') document.getElementById('toolRect').classList.add('active');
+      if (tool === 'pen') document.getElementById('toolPen').classList.add('active');
+      if (tool === 'text') document.getElementById('toolText').classList.add('active');
+    }
+
+    function launchAnnotator() {
+      let imgSrc = thumb.src;
+      if (!imgSrc) return;
+
+      baseImg = new Image();
+      baseImg.crossOrigin = "anonymous";
+      baseImg.onload = function () {
+        canvas.width = baseImg.width;
+        canvas.height = baseImg.height;
+        ctx.drawImage(baseImg, 0, 0);
+
+        canvasUndoStack = [];
+        canvasRedoStack = [];
+        saveAnnotationState();
+
+        const aModal = new bootstrap.Modal(document.getElementById('annotateModal'));
+        aModal.show();
+      };
+      baseImg.src = imgSrc;
+    }
+
+    function saveAnnotationState() {
+      canvasUndoStack.push(ctx.getImageData(0, 0, canvas.width, canvas.height));
+      canvasRedoStack = [];
+    }
+
+    function undoAnnotation() {
+      if (canvasUndoStack.length > 1) {
+        let currentState = canvasUndoStack.pop();
+        canvasRedoStack.push(currentState);
+        let previousState = canvasUndoStack[canvasUndoStack.length - 1];
+        ctx.putImageData(previousState, 0, 0);
+      }
+    }
+
+    function redoAnnotation() {
+      if (canvasRedoStack.length > 0) {
+        let nextState = canvasRedoStack.pop();
+        canvasUndoStack.push(nextState);
+        ctx.putImageData(nextState, 0, 0);
+      }
+    }
+
+    function forceRestoreCleanOriginal() {
+      const confirmed = confirm("Are you sure? This will remove all annotations and restore the clean image.");
+      if (!confirmed) return;
+
+      let rawPath = document.getElementById('rawOriginalImgStore').value;
+
+      if (rawPath && rawPath.startsWith('images/raw_')) {
+        let cleanImg = new Image();
+        cleanImg.crossOrigin = "anonymous";
+        cleanImg.onload = function() {
+          canvas.width = cleanImg.width;
+          canvas.height = cleanImg.height;
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          ctx.drawImage(cleanImg, 0, 0);
+
+          canvasUndoStack = [];
+          canvasRedoStack = [];
+          saveAnnotationState();
+
+          thumb.src = rawPath;
+          pastedImageBase64 = canvas.toDataURL('image/png');
+        };
+        cleanImg.src = rawPath;
+      } else {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        canvasUndoStack = [];
+        canvasRedoStack = [];
+        thumb.src = "";
+        pastedImageBase64 = "";
+        document.getElementById('previewArea').style.display = 'none';
+
+        const aModalEl = document.getElementById('annotateModal');
+        const aModal = bootstrap.Modal.getInstance(aModalEl);
+        if (aModal) aModal.hide();
+
+        alert("कैनवास साफ़ हो गया है! Ctrl + V दबाकर स्क्रीनशॉट दोबारा पेस्ट कर सकते हैं।");
+        document.getElementById('pasteZone').focus();
+      }
+    }
+
+    canvas.addEventListener('mousedown', function (e) {
+      const rect = canvas.getBoundingClientRect();
+      const scaleX = canvas.width / rect.width;
+      const scaleY = canvas.height / rect.height;
+      startX = (e.clientX - rect.left) * scaleX;
+      startY = (e.clientY - rect.top) * scaleY;
+
+      if (currentTool === 'text') {
+        let note = prompt("Enter text to write on image:", "Click here");
+        if (note) {
+          ctx.fillStyle = document.getElementById('annotateColor').value;
+          ctx.font = "bold 20px -apple-system, sans-serif";
+          ctx.fillText(note, startX, startY);
+          saveAnnotationState();
+        }
+        return;
+      }
+
+      isDrawing = true;
+      if (currentTool === 'pen') {
+        ctx.beginPath();
+        ctx.moveTo(startX, startY);
+      }
+    });
+
+    canvas.addEventListener('mousemove', function (e) {
+      if (!isDrawing) return;
+      const rect = canvas.getBoundingClientRect();
+      const scaleX = canvas.width / rect.width;
+      const scaleY = canvas.height / rect.height;
+      let curX = (e.clientX - rect.left) * scaleX;
+      let curY = (e.clientY - rect.top) * scaleY;
+
+      let color = document.getElementById('annotateColor').value;
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 4;
+      ctx.lineCap = 'round';
+
+      if (currentTool === 'pen') {
+        ctx.lineTo(curX, curY);
+        ctx.stroke();
+      } else {
+        let lastState = canvasUndoStack[canvasUndoStack.length - 1];
+        ctx.putImageData(lastState, 0, 0);
+
+        if (currentTool === 'rect') {
+          ctx.strokeRect(startX, startY, curX - startX, curY - startY);
+        } else if (currentTool === 'arrow') {
+          drawArrow(ctx, startX, startY, curX, curY, color);
+        }
+      }
+    });
+
+    canvas.addEventListener('mouseup', function () {
+      if (!isDrawing) return;
+      isDrawing = false;
+      saveAnnotationState();
+    });
+
+    function drawArrow(context, fromx, fromy, tox, toy, color) {
+      let headlen = 14;
+      let dx = tox - fromx;
+      let dy = toy - fromy;
+      let angle = Math.atan2(dy, dx);
+      context.strokeStyle = color;
+      context.fillStyle = color;
+      context.lineWidth = 4;
+
+      context.beginPath();
+      context.moveTo(fromx, fromy);
+      context.lineTo(tox, toy);
+      context.stroke();
+
+      context.beginPath();
+      context.moveTo(tox, toy);
+      context.lineTo(tox - headlen * Math.cos(angle - Math.PI / 6), toy - headlen * Math.sin(angle - Math.PI / 6));
+      context.lineTo(tox - headlen * Math.cos(angle + Math.PI / 6), toy - headlen * Math.sin(angle + Math.PI / 6));
+      context.closePath();
+      context.fill();
+    }
+
+    function applyAnnotationToImage() {
+      pastedImageBase64 = canvas.toDataURL('image/png');
+      thumb.src = pastedImageBase64;
+      const aModalEl = document.getElementById('annotateModal');
+      const aModal = bootstrap.Modal.getInstance(aModalEl);
+      if (aModal) aModal.hide();
+    }
+
+    const pasteZone = document.getElementById('pasteZone');
+    const thumb = document.getElementById('thumb');
+    const previewArea = document.getElementById('previewArea');
+
+    pasteZone.addEventListener('paste', function (e) {
+      let items = (e.clipboardData || e.originalEvent.clipboardData).items;
+      for (let index in items) {
+        let item = items[index];
+        if (item.kind === 'file' && item.type.startsWith('image/')) {
+          let blob = item.getAsFile();
+          let reader = new FileReader();
+          reader.onload = function (evt) {
+            pastedImageBase64 = evt.target.result;
+            cleanOriginalImageBackup = pastedImageBase64;
+            document.getElementById('rawOriginalImgStore').value = pastedImageBase64;
+
+            thumb.src = pastedImageBase64;
+            previewArea.style.display = 'block';
+          };
+          reader.readAsDataURL(blob);
+          e.preventDefault();
+          break;
+        }
+      }
+    });
+
+    function clearCurrentScreenshot() {
+      thumb.src = "";
+      pastedImageBase64 = "";
+      document.getElementById('rawOriginalImgStore').value = "";
+      document.getElementById('editExistingImg').value = "";
+      cleanOriginalImageBackup = "";
+      previewArea.style.display = "none";
+    }
+
+    async function saveEntryHandler() {
+      const isEdit = document.getElementById('editItemId').value !== "";
+      const endpoint = isEdit ? '/api/update' : '/api/save';
+
+      const targetModId = isEdit ? document.getElementById('editItemModId').value : document.getElementById('modSelect').value;
+      activeModuleId = targetModId;
+
+      const localPath = document.getElementById('localVideoPathInput').value.trim();
+      const youtubeUrl = document.getElementById('videoUrlInput').value.trim();
+
+      let videoType = "none";
+      if (localPath) {
+        videoType = "local";
+      } else if (processedVideoBase64) {
+        videoType = "local";
+      } else if (youtubeUrl) {
+        videoType = "youtube";
+      }
+
+      const payload = {
+        moduleId: targetModId,
+        itemId: document.getElementById('editItemId').value,
+        title: document.getElementById('entryTitle').value.trim(),
+        content: document.getElementById('entryContentBox').innerHTML,
+        imgBase64: pastedImageBase64,
+        existingImg: document.getElementById('editExistingImg').value,
+        rawOriginalImg: document.getElementById('rawOriginalImgStore').value,
+        existingRawImg: document.getElementById('rawOriginalImgStore').value,
+        imgWidth: document.getElementById('imageWidthSelect').value,
+        localVideoPath: localPath,
+        videoBase64: processedVideoBase64,
+        videoUrl: youtubeUrl,
+        existingVideo: document.getElementById('editExistingVideo').value,
+        videoType: videoType
+      };
+
+      if (!payload.title) {
+        alert("Please enter a title.");
+        return;
+      }
+
+      try {
+        const res = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const result = await res.json();
+        if (result.success) {
+          closeEntryModal();
+          await loadData();
+
+          setTimeout(() => {
+            const targetEl = isEdit ? document.getElementById(`card-${payload.itemId}`) : document.getElementById(`accordion-${targetModId}`);
+            ensureElementVisible(targetEl);
+          }, 150);
+        } else {
+          alert("Error: " + result.error);
+        }
+      } catch (err) {
+        alert("Server not responding. Ensure server is running.");
+      }
+    }
+
+    function openEditModal(modId, itemId) {
+      let targetMod = db.find(m => m.id === modId);
+      if (!targetMod) return;
+      let item = targetMod.items.find(i => i.id === itemId);
+      if (!item) return;
+
+      activeModuleId = modId;
+
+      document.getElementById('modalHeadingTitle').innerHTML = '<i class="bi bi-pencil-square"></i> Edit Entry';
+      document.getElementById('editItemId').value = item.id;
+      document.getElementById('editItemModId').value = modId;
+      document.getElementById('editExistingImg').value = item.img || "";
+      document.getElementById('rawOriginalImgStore').value = item.rawOriginalImg || "";
+      cleanOriginalImageBackup = item.rawOriginalImg || "";
+      document.getElementById('editExistingVideo').value = item.video || "";
+
+      document.getElementById('moduleSelectDiv').style.display = 'none';
+      document.getElementById('entryTitle').value = item.title;
+      document.getElementById('entryContentBox').innerHTML = item.content;
+      document.getElementById('imageWidthSelect').value = item.imgWidth || "75%";
+
+      if (item.video) {
+        if (item.video.includes("http://") || item.video.includes("https://")) {
+          document.getElementById('videoUrlInput').value = item.video;
+          document.getElementById('localVideoPathInput').value = "";
+        } else {
+          document.getElementById('localVideoPathInput').value = item.video;
+          document.getElementById('videoUrlInput').value = "";
+        }
+      } else {
+        document.getElementById('localVideoPathInput').value = "";
+        document.getElementById('videoUrlInput').value = "";
+      }
+
+      processedVideoBase64 = "";
+      videoFileInput.value = "";
+      videoFeedbackArea.style.display = 'none';
+
+      if (item.img) {
+        thumb.src = item.img;
+        previewArea.style.display = 'block';
+        pastedImageBase64 = "";
+      } else {
+        previewArea.style.display = 'none';
+        pastedImageBase64 = "";
+      }
+
+      const modal = new bootstrap.Modal(document.getElementById('entryModal'));
+      modal.show();
+    }
+
+    function openAddModal() {
+      document.getElementById('modalHeadingTitle').innerHTML = '<i class="bi bi-file-richtext"></i> Add Entry';
+      document.getElementById('editItemId').value = "";
+      document.getElementById('editItemModId').value = "";
+      document.getElementById('editExistingImg').value = "";
+      document.getElementById('rawOriginalImgStore').value = "";
+      cleanOriginalImageBackup = "";
+      document.getElementById('editExistingVideo').value = "";
+
+      document.getElementById('moduleSelectDiv').style.display = 'block';
+      document.getElementById('entryTitle').value = "";
+      document.getElementById('entryContentBox').innerHTML = "";
+      document.getElementById('imageWidthSelect').value = "75%";
+      document.getElementById('localVideoPathInput').value = "";
+      document.getElementById('videoUrlInput').value = "";
+
+      processedVideoBase64 = "";
+      videoFileInput.value = "";
+      videoFeedbackArea.style.display = 'none';
+
+      pastedImageBase64 = "";
+      thumb.src = "";
+      previewArea.style.display = 'none';
+
+      const modal = new bootstrap.Modal(document.getElementById('entryModal'));
+      modal.show();
+    }
+
+    function closeEntryModal() {
+      const modalEl = document.getElementById('entryModal');
+      const modal = bootstrap.Modal.getInstance(modalEl);
+      if (modal) modal.hide();
+    }
+
+    function escapeHtml(str) { return (str || '').replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+
+    window.onload = loadData;
+  </script>
+</body>
+</html>
